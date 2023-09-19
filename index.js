@@ -6,6 +6,9 @@ const ROOMS         = 20,
 
       HELP = `
 Welcome to "Hunt the Wumpus"
+
+You must screenshot a winning game and send to @jon to get credit for this clue. 
+
 The wumpus lives in a cave of 20 rooms. Each room has 3 tunnels to
 other rooms. (Look at a dodecahedron to see how this works. If you
 dont know what a dodecahedron is, ask someone.)
@@ -142,7 +145,9 @@ function printlog(message) {
   message = message.split('\n');
   for (let m of message) {
     var div = document.createElement('div');
-  
+    if (trim(m) === '') {
+      m = ' ';
+    }
     div.append(m);
     document.getElementById('output').append(div);
   }
