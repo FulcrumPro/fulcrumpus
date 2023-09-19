@@ -1,5 +1,7 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <style>
       body {
         background-color: black;
@@ -9,14 +11,20 @@
     </style>
   </head>
   <body>
-    <div id="output" style="white-space: pre"></div>
+    <div id="output" style="white-space: pre-wrap"></div>
     <form id="inputarea" onsubmit="event.preventDefault(); onSubmit();">
       <span id="inputprompt"></span>
-      <input type="text" id="input" placeholder="type here" type="submit" />
+      <input
+        type="text"
+        id="input"
+        name="wumpus"
+        placeholder=""
+        type="submit"
+      />
       <button type="submit">Enter</button>
     </form>
     <div id="gameover" hidden>
-      <button onclick="window.reload()" type="button">Try Again</button>
+      <button onclick="location.reload()" type="button">Try Again</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>

@@ -136,6 +136,7 @@ function describeCurrentRoom(world) {
 Exits go to: ${ world.player.room[1].join(', ') }${ pit }${ wumpus }${ bat }`;
 }
 
+let func;
 
 function printlog(message) {
   message = message.split('\n');
@@ -225,7 +226,9 @@ function processInput (world, input) {
     } else {
       if (isInRoom(world, 'wumpus', room)) {
         printlog("YOU KILLED THE WUMPUS! GOOD JOB, BUDDY!!!");
-        printlog("Your code is: " + atob(xy + yx + yy + xx));
+        // GTFO! 
+        // :taco: if you own up to trying to cheat
+        printlog("Your code is: " + func(xy + yx + yy + xx));
         return die(true);
         
       } else {
@@ -239,6 +242,7 @@ function processInput (world, input) {
             printlog('You woke up the wumpus and he ate you!\nGAME OVER');
             return die();
           } else {
+            printlog('Your arrow flew into the darkness.')
             printlog('You heard a rumbling in a nearby cavern.');
           }
         }
@@ -276,6 +280,13 @@ var yy = 'R0';
 // MAIN LOOP //
 ///////////////
 
+for (party of 'abcdefghijklmnopqrstuvwxyz'.split('')) {
+  for (people of 'abcdefghijklmnopqrstuvwxyz'.split('')) {
+    if (window[party + 'to' + people] && party < people) {
+      func = window[party + 'to' + people];
+    }
+  }
+}
 
 function onSubmit() {
   var input = document.getElementById('input');
@@ -293,6 +304,7 @@ function die(peacefully) {
 }
 
 printlog(HELP);
+
 
 
 
