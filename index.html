@@ -1,11 +1,22 @@
 <html>
-  <head> </head>
+  <head>
+    <style>
+      body {
+        background-color: black;
+        color: rgb(79, 208, 79);
+        font-family: monospace;
+      }
+    </style>
+  </head>
   <body>
-    <div id="output"></div>
-    <div id="inputarea">
+    <div id="output" style="white-space: pre"></div>
+    <form id="inputarea" onsubmit="event.preventDefault(); onSubmit();">
       <span id="inputprompt"></span>
-      <input type="text" id="input" placeholder="type here" />
-      <button type="submit" onclick="onSubmit()">Enter</button>
+      <input type="text" id="input" placeholder="type here" type="submit" />
+      <button type="submit">Enter</button>
+    </form>
+    <div id="gameover" hidden>
+      <button onclick="window.reload()" type="button">Try Again</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>

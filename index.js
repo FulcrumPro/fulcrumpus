@@ -23,8 +23,8 @@ Wumpus:
    After that, if he is where you are, he eats you up and you lose!
 You:
    Each turn you may move or shoot a crooked arrow.
-   (M)oving:  You can move one room (through one tunnel).
-   (A)rrows:  You have 5 arrows.  You lose when you run out.
+   Moving:  You can move one room (through one tunnel).
+   Arrows:  You have 5 arrows.  You lose when you run out.
       You can only shoot to nearby rooms.
       If the arrow hits the wumpus, you win.
 Warnings:
@@ -59,7 +59,7 @@ const cave = chain(range(ROOMS))
                         || includes(nn[1], first(n))
                         || includes(n[1], first(nn))
                         || nn[1].length === ROOMS_TUNNELS);
-                console.log({candidates})
+
                 let chosen = sampleSize(candidates, ROOMS_TUNNELS - n[1].length);
 
                 each(chosen, c => {
@@ -90,7 +90,7 @@ let world = {
 
 // graphviz visualization:
 // const graphvizString = 'graph {\n' + map(cave, n => `    ${ first(n) } -- {${ n[1].join(', ') }};`).join('\n') + '\n}';
-
+var xy = 'T1';
 /////////////
 // HELPERS //
 /////////////
@@ -110,7 +110,6 @@ function isInRoom (world, element, room) {
 }
 
 function roomIsNearby(world, roomId) {
-  console.log({r: world.player.room[1], f: world.player.room})
   return includes(world.player.room[1].concat(first(world.player.room)), roomId);
 }
 
@@ -122,6 +121,7 @@ function randomEmptyRoom(world) {
   return sample(filter(world.cave, r => isEmpty(r[2])));
 }
 
+var xx = 'lO';
 ///////////////////////
 // WORLD INTERACTION //
 ///////////////////////
@@ -147,6 +147,7 @@ function printlog(message) {
  
 }
 
+var yx = 'JJ';
 function processInput (world, input) {
 
   function validateRoom() {
@@ -163,7 +164,7 @@ function processInput (world, input) {
     } else {
       if (input === 'y') {
         printlog('Goodbye, braveheart!');
-        printlog('DEAD')
+        return die();
       } else {
         printlog('Good. the Wumpus is looking for you!');
       }
@@ -189,11 +190,11 @@ function processInput (world, input) {
       world.player.room = room;
       if (isInRoom(world, 'wumpus')) {
         printlog('The wumpus ate you up!\nGAME OVER');
-        printlog('DEAD')
+        return die();
       }
       if (isInRoom(world, 'pit')) {
         printlog('You fall into a bottomless pit!\nGAME OVER');
-        printlog('DEAD')
+        return die();
       }
       if (isInRoom(world, 'bat')) {
         world.player.room = randomEmptyRoom(world);
@@ -223,7 +224,9 @@ function processInput (world, input) {
     } else {
       if (isInRoom(world, 'wumpus', room)) {
         printlog("YOU KILLED THE WUMPUS! GOOD JOB, BUDDY!!!");
-        printlog('DEAD');
+        printlog("Your code is: " + atob(xy + yx + yy + xx));
+        return die(true);
+        
       } else {
         if (random(3) > 0) {
           let newWumpusRoom = randomEmptyRoom(world);
@@ -233,7 +236,7 @@ function processInput (world, input) {
 
           if (isEqual(world.player.room, newWumpusRoom)) {
             printlog('You woke up the wumpus and he ate you!\nGAME OVER');
-            printlog('DEAD');
+            return die();
           } else {
             printlog('You heard a rumbling in a nearby cavern.');
           }
@@ -244,7 +247,7 @@ function processInput (world, input) {
     world.player.arrows--;
     if (world.player.arrows === 0) {
       printlog('You ran out of arrows.\nGAME OVER');
-      printlog('DEAD');
+      return die();
     }
 
     processInput.awaiting = null;
@@ -267,18 +270,25 @@ function processInput (world, input) {
 }
 processInput.awaiting = 'move';
 
+var yy = 'R0';
 ///////////////
 // MAIN LOOP //
 ///////////////
 
 
 function onSubmit() {
-  console.log("onSubmit")
   var input = document.getElementById('input');
   var value = input.value;
   input.value = '';
   processInput(world, trim(value));
-  printlog('-----------------------')
+  printlog('-----------------------');
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+function die(peacefully) {
+  document.getElementById('inputarea').hidden = true;
+  document.getElementById('gameover').hidden = false;
+  processInput.awaiting = 'dead';
 }
 
 printlog(HELP);
