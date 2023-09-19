@@ -280,7 +280,7 @@ function onSubmit() {
   var input = document.getElementById('input');
   var value = input.value;
   input.value = '';
-  processInput(world, trim(value));
+  processInput(world, trim(value.toLowerCase()));
   printlog('-----------------------');
   window.scrollTo(0, document.body.scrollHeight);
 }
