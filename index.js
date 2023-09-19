@@ -33,6 +33,7 @@ Warnings:
    Wumpus:  "You smell something terrible nearby."
    Bat   :  "You hear a rustling."
    Pit   :  "You feel a cold wind blowing from a nearby cavern."
+-----------------------
 `;
 
 
